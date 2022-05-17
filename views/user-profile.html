@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin_login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+<style>
+       body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin:0px;
+        }
+
+        .a {
+    height:10px;
+
+     margin-top: 1px;
+     margin-right: 2px;
+     position:absolute;
+     top:0;
+     right:0;
+ }
+  </style>
+     
+
+   
+</head>
+<div class="a" id="links"></div>
+
+
+<div class="logo">
+  <a href="http://localhost:4000/main">
+  <img
+    src="http://localhost:4000/img/Untitled.jpg"id="logo1"
+    style="height: 70px; width: 300px"
+    alt=""
+  />
+</a>
+<br><br>
+
+<script>
+    //check if the user has jwt token
+    if (localStorage.getItem("token")) {
+      //if the user has jwt token, then show the user name
+      document.getElementById(
+        "links"
+      ).innerHTML = `<a href="http://localhost:4000/profile" id="profile" class="link">
+      <img height="80" width="80"src="http://localhost:4000/img/profile.jpg" alt="user" />
+      </a> <a href="http://localhost:2000/app/cart" id="user"class="link">
+      <img height="80" width="80" src="http://localhost:4000/img/cart.png" alt="user" />
+      </a>`;
+    } else {
+      //if the user doesn't have jwt token, then show the login button
+      document.getElementById(
+        "links"
+      ).innerHTML = `<a class=' mb-3 w-100 ' id ="login3" href="http://localhost:4000/login">Login</a> <a class=' mb-3 w-100 ' id="register" href="http://localhost:4000/register">Register</a>`;
+    }
+  </script>
+
+<form action="" class="form" enctype="multipart/form-data">
+
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" id="img" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span id="name" class="font-weight-bold"></span><span id="email12" class="text-black-50"></span><span> </span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6"><label  class="labels">First Name</label><input type="text" id ="firstName" class="form-control" placeholder="Name" value=""></div>
+                    <div class="col-md-6"><label class="labels">DOB</label><input type="text" id ="dob"  class="form-control" value="" placeholder="DOB"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12"><label class="labels">Lisence</label><input type="text" id ="lisence" class="form-control" placeholder="lisence" value=""></div>
+                    <div class="col-md-12"><label class="labels">Email ID</label><input type="text" id ="email" class="form-control" placeholder="email" value=""></div>
+                </div>
+                <br><br>
+  
+                
+                <button class="btn btn-outline-primary mb-3 w-100 " type="submit">Save Profile</button>
+                <button class="btn btn-outline-primary mb-3 w-100 " id="logout">Logout</button>
+
+                <br><br>
+              </form>
+                <div class="col-lg-4">
+                  </div>
+            </div>
+        </div>
+        </div>
+        
+  
+  
+  
+  
+  
+  
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous" ></script> 
+  
+    <script>
+      //create a get ajax request with route /user and send the token
+      $.ajax({
+        url: "http://localhost:4000/userr",
+        type: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token")
+        },
+        success: function(data) {
+          //populate the fields with the data
+          $("#firstName").val(data.firstName);
+          $("#dob").val(data.DOB);
+          $("#lisence").val(data.Lisence);
+          $("#email").val(data.email);
+          $("#email12").append(data.email);
+          $("#name").append(data.firstName);
+  
+  
+  
+          //$("#profile").attr("src",data.profileImage);
+        }
+      });
+  
+  
+      //create a post ajax request with route /user and send the token
+      $("form").submit(function(e) {
+        e.preventDefault();
+  
+       // var file = image.files[0];
+       // console.log(file);
+        var formData = new FormData()
+        formData.append("firstName", $("#firstName").val());
+        formData.append("DOB", $("#dob").val());
+        formData.append("Lisence",  $("#lisence").val());
+        formData.append("email", $("#email").val());
+        //formData.append("file", file);
+  
+        console.log(formData);
+  
+        $.ajax({
+          url: "http://localhost:4000/userr/update",
+          type: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token")
+          },
+          data: formData,
+          contentType: false,
+          processData: false,
+          success: function(data) {
+          window.location.reload();
+          }
+        });
+      });
+  
+  
+      </script>
+    <script>
+      if (!localStorage.getItem("token")) {
+        window.location.href = "http://localhost:4000/login";
+      }
+    </script>
+  
+  
+  <script>
+  //logout function
+  $("#logout").click(function() {
+    localStorage.removeItem("token");
+    window.location.href = "http://localhost:4000/login";
+  });
+  </script>
+  
+  
+  </html>
+  

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CarsDetails</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      crossorigin="anonymous"
+    />
+
+    <!-- bootstrap 4 CDN -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="http://localhost:4000/style/home.css" />
+    <link rel="stylesheet" href="http://localhost:4000/style/main.css" />
+  </head>
+  <body>
+    <div
+      class="upperHeader"
+      style="display: flex; justify-content: space-between; align-items: center"
+    >
+    <div class="logo">
+        <a href="http://localhost:4000/main">
+        <img
+          src="http://localhost:4000/img/Untitled.jpg"id="logo"
+          style="height: 70px; width: 300px"
+          alt=""
+        />
+    </a>
+    </div> 
+      <div class="a" id="links"></div>
+      <script>
+        //check if the user has jwt token
+        if (localStorage.getItem("token")) {
+          //if the user has jwt token, then show the user name
+          document.getElementById(
+            "links"
+          ).innerHTML = `<a href="http://localhost:4000/profile" class="link">
+            <img height="70" width="70" src="http://localhost:4000/img/profile.jpg"  alt="user" id="profile"/>
+            </a> <a href="http://localhost:4000/hostcars" class="link">
+            <img height="80" width="120" src="http://localhost:4000/img/carshare.jpeg" alt="user" id="postrental" />
+            </a>`;
+        } else {
+          //if the user doesn't have jwt token, then show the login button
+          document.getElementById(
+            "links"
+          ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:4000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:4000/register">Register</a>`;
+        }
+      </script>
+    </div>
+
+    <br><br><br><br>
+
+
+<div class="main-product">
+    <div class="left">
+      <img src="" alt="" id="myImg" />
+    </div>
+    <div class="right">
+      <h1 id="name" style=" text-align: left"></h1>
+      <h5 id="price" style=" text-align: left"></h5>
+      <div class="form-group">
+        <label for="">hours</label>
+        <select style="width: 100px;" class="form-control" name="" id="qty">
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+          <option value="10">10</option>
+
+        
+
+
+
+
+
+
+
+        </select>
+      </div>
+
+      <p id="carmileage"></p>
+      <button  id ='total' class = "totalpr btn-outline-primary mb-3 w-50">Total Price</button>
+
+      <h5 id="Total" style=" text-align: left"></h5>
+
+      <button class = "btn btn-outline-primary mb-3 w-50">Book Now</button>
+
+    </div>
+  </div>
+
+  <script
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      var currentUrl = window.location.href;
+      const id = currentUrl.split("/").pop();
+      console.log(id);
+
+     
+
+
+      // create a get AJAX request
+      $.ajax({
+        url: "http://localhost:4000/rental/" + id,
+        type: "GET",
+        success: function (data) {
+          console.log(data);
+          // populate the inputs
+          $("#name").html(data.name);
+          $("#carmileage").html(`${data.carmileage} Km/l`);
+          $("#price").html(`$ ${data.price} /hr`);
+
+          $("#myImg").attr("src", data.image);
+          $("#Total").html(`$`);
+
+          document.getElementById("total").addEventListener("click", Grosscalculate);
+    function Grosscalculate() {
+        var hours = parseFloat(document.getElementById('qty').value);
+
+        var calculate = data.price * hours;
+        
+        document.getElementById('Total').innerHTML = calculate;
+       }
+
+
+
+
+
+        },
+      });
+
+      //create an ajax request to get all the products
+      $.ajax({
+        url: "http://localhost:4000/rental/list",
+        method: "GET",
+        success: function (data) {
+          for (let index = 0; index < data.length; index++) {
+            document.getElementById("allProducts-right").innerHTML += `
+          <div class="product">
+          <a href="http://localhost:4000/cardetails/${data[index].id}">
+          <img
+            src="${data[index].image}"
+            alt=""
+          />
+          </a>
+          <div class="product-info">
+            <li>$ ${data[index].price}</li>
+          </div>
+          <div class="product-info">
+            <h1>${data[index].carmileage}</h1>
+          </div>
+        </div>`;
+          }
+        },
+      });
+
+      //on click of add to cart button create an ajax request to add to cart
+      $(".btn").click(function () {
+        var qty = $("#qty").val();
+        console.log(qty);
+        $.ajax({
+          url: "http://localhost:4000/cart/add",
+          type: "POST",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+          data: {
+            productId: id,
+            qty: qty,
+          },
+          success: function (data) {
+            console.log(data);
+            window.location.href = "http://localhost:4000/billing";
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

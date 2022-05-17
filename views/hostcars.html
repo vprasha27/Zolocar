@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin_login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+<style>
+       body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            margin:0px;
+        }
+
+        .a {
+    height:10px;
+
+     margin-top: 1px;
+     margin-right: 2px;
+     position:absolute;
+     top:0;
+     right:0;
+ }
+  </style>
+     
+
+   
+</head>
+<div class="a" id="links"></div>
+
+
+<div class="logo">
+  <a href="http://localhost:4000/main">
+  <img
+    src="http://localhost:4000/img/Untitled.jpg"id="logo1"
+    style="height: 70px; width: 300px"
+    alt=""
+  />
+</a>
+<br><br>
+
+<script>
+    //check if the user has jwt token
+    if (localStorage.getItem("token")) {
+      //if the user has jwt token, then show the user name
+      document.getElementById(
+        "links"
+      ).innerHTML = `<a href="http://localhost:4000/profile" class="link">
+        <img height="70" width="70" src="http://localhost:4000/img/profile.jpg"  alt="user" id="profile"/>
+        </a> <a href="http://localhost:4000/hostcars" class="link">
+        <img height="80" width="120" src="http://localhost:4000/img/carshare.jpeg" alt="user" id="postrental" />
+        </a>`;
+    } else {
+      //if the user doesn't have jwt token, then show the login button
+      document.getElementById(
+        "links"
+      ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:4000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:4000/register">Register</a>`;
+    }
+  </script>
+
+<body>
+
+   
+    <div class ="mb-5">
+        <h3 class ="mb-3">Host Car</h3>
+        <form enctype="multipart/form-data">
+
+        <input  type="text" id="name" placeholder="Car Name" class ="form-control mb-3">
+        <select  class ="form-control mb-3" id="cartype" name="cars">
+            <option value="Automatic">Automatic</option>
+            <option value="Manual">Manual</option>
+          </select>
+
+        <input type="text" id="address" placeholder="Address" class ="form-control mb-3">
+        <input type="text" id="cardriven" placeholder="Car Driven" class ="form-control mb-3">
+        <input type="text" id="carmileage" placeholder="Mileage/Km" class ="form-control mb-3">
+        <input type="text" id="carnumber" placeholder="Car Number" class ="form-control mb-3">
+        <input type="text" id="carinsurance" placeholder="Insurance No" class ="form-control mb-3">
+
+        <input type="number" id="price" placeholder="$ Price/hr" class ="form-control mb-3">
+        <label for="image">Image</label>
+        <input type="file" id="image" name="image" required /><br /><br />
+
+       <div style="display: flex;" class ="clearfix">
+            <button class = "btn btn-outline-primary mb-3 w-50" id = "addCar">Host Car</button>            <button onclick="window.location.href='http://localhost:4000/hosthome';" class = "btn btn-outline-primary mb-3 w-50" id = "getpaid">Get Paid</button>
+
+
+
+
+        </div>
+
+
+</form>
+
+
+
+    </div>
+
+  
+    <script
+    src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+    crossorigin="anonymous"
+  ></script>
+  
+  <script>
+    // create a post AJAX request to add the product
+  
+    //when clocked on cancel button the page should be redirected to the admin page
+   /* $("#cancel").click(function () {
+      window.location.href = "http://localhost:2000/admin/products";
+    });  */
+  
+    $("#addCar").click(function (e) {
+      e.preventDefault();
+      var file = image.files[0];
+      var name = $("#name").val();
+      var cartype = $("#cartype").val();
+
+
+      var address = $("#address").val();
+  
+      var cardriven = $("#cardriven").val();
+      var carmileage = $("#carmileage").val();
+  
+      var price = $("#price").val();
+      var carnumber = $("#carnumber").val();
+      var carinsurance = $("#carinsurance").val();
+
+  
+  
+      var formData = new FormData();
+  
+  
+      formData.append("name", name);
+      formData.append("cartype", cartype);
+      formData.append("address", address);
+      formData.append("cardriven", cardriven);
+      formData.append("carmileage", carmileage);
+      formData.append("price", price);
+      formData.append("carnumber", carnumber);
+      formData.append("carinsurance", carinsurance);
+      formData.append("file", file);
+  
+      if (cartype == "" || carmileage == "" || carinsurance == "" || cardriven == "" || name == "" ||  address == "" || file == "") {
+            alert("Your Add is empty");
+          } 
+  
+  else{
+      
+      $.ajax({
+        url: "http://localhost:4000/rental/add",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          console.log(data);
+          location.reload();
+          $("#error").html(data.message);
+          alert("The Add has been Posted")
+        },
+        error: function (data) {
+          console.log(data);
+          $("#error").html(data.responseJSON.message);
+        },
+      });
+    }
+    });
+  
+  </script>
+    
+    </body>
+  </html>
