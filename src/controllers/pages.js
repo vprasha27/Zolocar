@@ -62,7 +62,7 @@ router.get("/adminuserslist", (req, res) => {
     Key:PUBLISHABLE_KEY
   });
 
-  router.get("/ride", (req, res) => {
+ router.get("/ride/search", (req, res) => {
     res.render("ride");
   });
 
@@ -82,4 +82,40 @@ router.get("/adminuserslist", (req, res) => {
   router.get("/bankinfo", (req, res) => {
     res.render("admin-accountinfo-list");
   }); 
+
+
+  router.get("/forgot-password", (req, res) => {
+    res.render("forgotpassword");
+  }); 
+
+  router.get("/otp", (req, res) => {
+    res.render("otp");
+  }); 
+
+
+  router.get("/reset-password", (req, res) => {
+    res.render("resetpassword");
+  }); 
+
+  router.get("/admincars", (req, res) => {
+    res.render("admincars");
+  }); 
+
+  router.get("/zolocars", (req, res) => {
+    res.render("zolocars");
+  }); 
+
+
+  router.get("/addnotification", (req, res) => {
+    res.render("adminnotify");
+  });
+
+
+  router.get("/notificationlist", (req, res) => {
+    res.render("adminnotificationlist");
+  });
+
+  router.get("/notificationupdate/:id", (req, res) => {
+    res.render("adminupdatenotify");
+  });
 module.exports = router;

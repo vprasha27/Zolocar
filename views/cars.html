@@ -39,9 +39,9 @@ flex-direction: column;
     style="display: flex; justify-content: space-between; align-items: center"
   >
   <div class="logo">
-    <a href="http://localhost:4000/main">
+    <a href="http://localhost:2000/main">
     <img
-      src="http://localhost:4000/img/Untitled.jpg"id="logo"
+      src="http://localhost:2000/img/Untitled.jpg"id="logo"
       style="height: 70px; width: 300px"
       alt=""
     />
@@ -55,16 +55,16 @@ flex-direction: column;
         //if the user has jwt token, then show the user name
         document.getElementById(
           "links"
-        ).innerHTML = `<a href="http://localhost:4000/profile" class="link">
-          <img height="70" width="70" src="http://localhost:4000/img/profile.jpg"  alt="user" id="profile"/>
-          </a> <a href="http://localhost:4000/hostcars" class="link">
-          <img height="80" width="120" src="http://localhost:4000/img/carshare.jpeg" alt="user" id="postrental" />
+        ).innerHTML = `<a href="http://localhost:2000/profile" class="link">
+          <img height="70" width="70" src="http://localhost:2000/img/profile.jpg"  alt="user" id="profile"/>
+          </a> <a href="http://localhost:2000/hostcars" class="link">
+          <img height="80" width="120" src="http://localhost:2000/img/carshare.jpeg" alt="user" id="postrental" />
           </a>`;
       } else {
         //if the user doesn't have jwt token, then show the login button
         document.getElementById(
           "links"
-        ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:4000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:4000/register">Register</a>`;
+        ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:2000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:2000/register">Register</a>`;
       }
     </script>
   </div>
@@ -91,7 +91,7 @@ flex-direction: column;
   <script>
    
     $.ajax({
-      url: "http://localhost:4000/rentals/feature/get",
+      url: "http://localhost:2000/rentals/feature/get",
       method: "GET",
       success: function (data) {
        
@@ -100,7 +100,7 @@ flex-direction: column;
         for (let i = 0; i < data.length; i++) {
           document.getElementsByClassName("featured")[0].innerHTML += `
           <div class="container">
-      <a href="http://localhost:4000/cardetails/${data[i].id}">
+      <a href="http://localhost:2000/cardetails/${data[i].id}">
        
 
         <img  class="thumb mt-2" style="width:350px  ; height: 250px;"
@@ -116,7 +116,7 @@ flex-direction: column;
       <li>${data[i].cardriven} km</li>
       <li>${data[i].address}</li>
       <h5>$${data[i].price}/hr</h5>
-      <button onclick="window.location.href='http://localhost:4000/cardetails/${data[i].id}';" class = "detbtns btn btn-outline-primary mb-3 w-50" id="detbtn-`+i+`">Book Now</button>
+      <button onclick="window.location.href='http://localhost:2000/cardetails/${data[i].id}';" class = "detbtns btn btn-outline-primary mb-3 w-50" id="detbtn-`+i+`">Book Now</button>
 
 
 
@@ -128,6 +128,8 @@ flex-direction: column;
         console.log(err);
       },
     });
+
+    
 
     
   </script>

@@ -48,15 +48,15 @@
       //if the user doesn't have jwt token, then show the login button
       document.getElementById(
         "links"
-      ).innerHTML = `<a class=' mb-3 w-100 ' id ="login3" href="http://localhost:4000/login">Login</a> <a class=' mb-3 w-100 ' id="register" href="http://localhost:2000/register">Register</a>`;
+      ).innerHTML = `<a class=' mb-3 w-100 ' id ="login3" href="http://localhost:2000/login">Login</a> <a class=' mb-3 w-100 ' id="register" href="http://localhost:2000/register">Register</a>`;
     }
   </script>
 
 
 <div class="logo">
-  <a href="http://localhost:4000/main">
+  <a href="http://localhost:2000/main">
   <img
-    src="http://localhost:4000/img/Untitled.jpg"id="logo1"
+    src="http://localhost:2000/img/Untitled.jpg"id="logo1"
     style="height: 70px; width: 300px"
     alt=""
   />
@@ -69,11 +69,15 @@
     <h3 class ="mb-3">Sign Up</h3>
     <input  type="text" id="name" placeholder="Fullname" class ="form-control mb-3">
     <input type="text" id="dob" placeholder="DOB" class ="form-control mb-3">
-    <input type="text" id="lisence" placeholder="Driving Lisence No" class ="form-control mb-3">
-
+    <div class="form-group">
+    <input style="width: 300px;" type="text" id="lisence" placeholder="Driving Lisence No" pattern="(?=.*?[A-Z]).{10}" title="Must start with an Uppercase Alphabet followed by 9 digits">
+  </div>
     <input type="email" id="email" placeholder="Email" class ="form-control mb-3">
-    <input type="password" id="password" placeholder="Password" class ="form-control mb-3">
 
+    <div class="form-group ">
+
+    <input style="width: 300px;" type="password" id="password" placeholder="Password" pattern="(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" >
+  </div>
 
     <button type="submit"  id=
     "signin" class = "btn btn-outline-primary mb-3 w-100 ">Submit</button>
@@ -101,11 +105,15 @@ crossorigin="anonymous"
       const password = $("#password").val();
       const lisence = $("#lisence").val();
 
+      if (firstName == "" || dob == "" || email == "" || password == "" || lisence == "") {
+            alert("You Missed Some Fields Please check ");
+          } 
 
+else{
 
       //create ajax request
       $.ajax({
-        url: "http://localhost:4000/userr/register",
+        url: "http://localhost:2000/userr/register",
         type: "POST",
         data: {
           firstName: firstName,
@@ -116,13 +124,14 @@ crossorigin="anonymous"
         },
         success: function (data) {
           //if the request is successful, then redirect the user to the login page
-          window.location.href = "http://localhost:4000/login";
+          window.location.href = "http://localhost:2000/login";
         },
         error: function (error) {
           //if the request is unsuccessful, then show the error message
           $("#error").text(error.responseJSON.message);
         },
       });
+    }
     });
   </script>
 

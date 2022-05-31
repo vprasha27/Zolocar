@@ -21,16 +21,16 @@
     style="display: flex; justify-content: space-between; align-items: center"
   >
   <div class="logo">
-    <a href="http://localhost:4000/main">
+    <a href="http://localhost:2000/main">
     <img
-      src="http://localhost:4000/img/Untitled.jpg"id="logo"
+      src="http://localhost:2000/img/Untitled.jpg"id="logo"
       style="height: 70px; width: 300px"
       alt=""
     />
 </a>
 </div> 
     <div class="a" id="links"></div>
-    <a href="http://localhost:4000/adminlogin" id ="host" class="w3-bar-item w3-button w3-right w3-hover-red w3-text-grey">Admin Panel</a>
+    <a href="http://localhost:2000/adminlogin" id ="host" class="w3-bar-item w3-button w3-right w3-hover-red w3-text-grey">Admin Panel</a>
 
     <script>
       //check if the user has jwt token
@@ -38,16 +38,16 @@
         //if the user has jwt token, then show the user name
         document.getElementById(
           "links"
-        ).innerHTML = `<a href="http://localhost:4000/profile" class="link">
-          <img height="70" width="70" src="http://localhost:4000/img/profile.jpg"  alt="user" id="profile"/>
-          </a> <a href="http://localhost:4000/hostcars" class="link">
-          <img height="80" width="120" src="http://localhost:4000/img/carshare.jpeg" alt="user" id="postrental" />
+        ).innerHTML = `<a href="http://localhost:2000/profile" class="link">
+          <img height="70" width="70" src="http://localhost:2000/img/profile.jpg"  alt="user" id="profile"/>
+          </a> <a href="http://localhost:2000/hostcars" class="link">
+          <img height="80" width="120" src="http://localhost:2000/img/carshare.jpeg" alt="user" id="postrental" />
           </a>`;
       } else {
         //if the user doesn't have jwt token, then show the login button
         document.getElementById(
           "links"
-        ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:4000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:4000/register">Register</a>`;
+        ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:2000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:2000/register">Register</a>`;
       }
     </script>
   </div>
@@ -60,7 +60,7 @@
 
 <!-- Header -->
 <header class="w3-display-container w3-content w3-hide-small" style="max-width:1500px">
-  <img id ="homeimg" class="w3-image" src="http://localhost:4000/img/pexels.jpg" alt="London" width="1500" height="700">
+  <img id ="homeimg" class="w3-image" src="http://localhost:2000/img/pexels.jpg" alt="London" width="1500" height="700">
   <div class="w3-display-middle" style="width:65%">
 
     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
@@ -71,29 +71,30 @@
 
     <!-- Tabs -->
     <div id="Ride" class="w3-container w3-white w3-padding-16 myLink">
+     
       <h3 id ="head1">Make your journey with us</h3>
-      <form action ="/ride/search" class= "search-form">
       <div class="w3-row-padding" style="margin:0 -16px;">
+        <form action ="/ride/search" class ="search-form">
         <div class="w3-half">
           <label id ="from">From</label>
 
-          <input id="departfrom" name ="term" class="w3-input w3-border" type="text" placeholder="Departing from">
+          <input type="search"  name ="term" class="w3-input w3-border" placeholder="Departing from">
         </div>
         <div class="w3-half">
           <label id ="to">To</label>
           <input id="arrivingto" class="w3-input w3-border" type="text" placeholder="Arriving at">
         </div>
       </div>
-      <p><button id ="search1" class="w3-button w3-dark-grey">Search Cars</button></p>
-      </form>
+      <p><button value="Search" type="submit"  id ="search1" class="w3-button w3-dark-grey">Search Cars</button></p>
+    </form>
     </div>
 
     
 
     <div id="Car" class="w3-container w3-white w3-padding-16 myLink">
       <h3 id ="head2">Best car rentals in canada!</h3>
-      <p id ="para1"><span id="discount" class="w3-tag w3-deep-orange">DISCOUNT!</span> Special offer if you book today: 25% off anywhere in Montreal with ZoloCar</p>
-      <p><button  onclick="window.location.href='http://localhost:4000/cars';" id="serach2" class="w3-button w3-dark-grey">Search Cars</button></p>
+      <p id ="paragra1"><span id="discount" class="w3-tag w3-deep-orange">DISCOUNT!</span> </p>
+      <p><button  onclick="window.location.href='http://localhost:2000/cars';" id="serach2" class="w3-button w3-dark-grey">Search Cars</button></p>
     </div>
   </div>
 </header>
@@ -126,7 +127,7 @@
         <p id ="para21" class="w3-opacity">Roundtrip from $2500</p>
         <p>
             On the west coast, British Columbia is the best place for viewing whales in their natural habitat.</p>
-        <button onclick="window.location.href='http://localhost:4000/cars';" class="w3-button w3-margin-bottom">Choose Car</button>
+        <button onclick="window.location.href='http://localhost:2000/zolocars';" class="w3-button w3-margin-bottom">Choose Car</button>
       </div>
     </div>
     <div class="w3-half w3-margin-bottom">
@@ -135,20 +136,19 @@
         <h3>Mountains, Yukon</h3>
         <p class="w3-opacity">One-way from $1000</p>
         <p>The Yukon is home to some of Canada's highest mountains, including Mount Logan, the highest peak in Canada.</p>
-        <button onclick="window.location.href='http://localhost:4000/cars';"  class="w3-button w3-margin-bottom">Choose car</button>
+        <button onclick="window.location.href='http://localhost:2000/cars';"  class="w3-button w3-margin-bottom">Choose car</button>
       </div>
     </div>
   </div>
 
   <!-- Newsletter -->
-  <div class="w3-container">
-    <div class="w3-panel w3-padding-16 w3-black w3-opacity w3-card w3-hover-opacity-off">
-      <h2>Get the best offers first!</h2>
-      <p>Join our newsletter.</p>
-      <label>E-mail</label>
-      <input class="w3-input w3-border" type="text" placeholder="Your Email address">
-      <button type="button" id ="subscribe" class="w3-button w3-red w3-margin-top">Subscribe</button>
-    </div>
+  <div style="display: flex;" class="featured"></div>
+
+  <div  id ="carsdiv" class ="container">
+          
+
+         
+
   </div>
   
   <!-- Contact -->
@@ -182,7 +182,7 @@ $(".contact").submit(function (e) {
   var message = $("#message").val();
   //send email using nodemailer
   $.ajax({
-    url: "http://localhost:4000/contact",
+    url: "http://localhost:2000/contact",
     type: "POST",
     data: {
       name: name,
@@ -197,6 +197,36 @@ $(".contact").submit(function (e) {
     },
   });
 });
+
+$.ajax({
+      url: "http://localhost:2000/notify/list",
+      method: "GET",
+      success: function (data) {
+       
+
+        //loop through the data
+        for (let i = 0; i < data.length; i++) {
+          document.getElementsByClassName("featured")[0].innerHTML += `
+          <div class="container">
+   
+
+
+      <h3>${data[i].notification}</h3>   
+
+
+
+
+    </div>`;
+
+        }
+      },
+      error: function (err) {
+        console.log(err);
+      },
+    });
+
+
+
 </script>
   
 <!-- End page content -->
@@ -208,10 +238,7 @@ $(".contact").submit(function (e) {
   <div class="w3-xlarge w3-padding-16">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
     <i class="fa fa-instagram w3-hover-opacity"></i>
-    <i class="fa fa-snapchat w3-hover-opacity"></i>
-    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
-    <i class="fa fa-twitter w3-hover-opacity"></i>
-    <i class="fa fa-linkedin w3-hover-opacity"></i>
+
   </div>
  <!-- Footer end. -->
  </footer>
@@ -276,6 +303,11 @@ document.getElementsByClassName("tablink")[0].click();
     
     
     </script>
+
+
+
+
+   
 
 
 

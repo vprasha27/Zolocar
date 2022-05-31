@@ -36,9 +36,9 @@
 
 
 <div class="logo">
-  <a href="http://localhost:4000/main">
+  <a href="http://localhost:2000/main">
   <img
-    src="http://localhost:4000/img/Untitled.jpg"id="logo1"
+    src="http://localhost:2000/img/Untitled.jpg"id="logo1"
     style="height: 70px; width: 300px"
     alt=""
   />
@@ -51,16 +51,16 @@
       //if the user has jwt token, then show the user name
       document.getElementById(
         "links"
-      ).innerHTML = `<a href="http://localhost:4000/profile" class="link">
-        <img height="70" width="70" src="http://localhost:4000/img/profile.jpg"  alt="user" id="profile"/>
-        </a> <a href="http://localhost:4000/hostcars" class="link">
-        <img height="80" width="120" src="http://localhost:4000/img/carshare.jpeg" alt="user" id="postrental" />
+      ).innerHTML = `<a href="http://localhost:2000/profile" class="link">
+        <img height="70" width="70" src="http://localhost:2000/img/profile.jpg"  alt="user" id="profile"/>
+        </a> <a href="http://localhost:2000/hostcars" class="link">
+        <img height="80" width="120" src="http://localhost:2000/img/carshare.jpeg" alt="user" id="postrental" />
         </a>`;
     } else {
       //if the user doesn't have jwt token, then show the login button
       document.getElementById(
         "links"
-      ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:4000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:4000/register">Register</a>`;
+      ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:2000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:2000/register">Register</a>`;
     }
   </script>
 
@@ -88,7 +88,7 @@
         <input type="file" id="image" name="image" required /><br /><br />
 
        <div style="display: flex;" class ="clearfix">
-            <button class = "btn btn-outline-primary mb-3 w-50" id = "addCar">Host Car</button>            <button onclick="window.location.href='http://localhost:4000/hosthome';" class = "btn btn-outline-primary mb-3 w-50" id = "getpaid">Get Paid</button>
+            <button class = "btn btn-outline-primary mb-3 w-50" id = "addCar">Host Car</button>            <button onclick="window.location.href='http://localhost:2000/hosthome';" class = "btn btn-outline-primary mb-3 w-50" id = "getpaid">Get Paid</button>
 
 
 
@@ -154,7 +154,7 @@
   else{
       
       $.ajax({
-        url: "http://localhost:4000/rental/add",
+        url: "http://localhost:2000/rental/add",
         type: "POST",
         data: formData,
         contentType: false,

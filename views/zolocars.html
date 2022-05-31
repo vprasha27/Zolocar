@@ -71,7 +71,7 @@ flex-direction: column;
   <br><br><br>
 
 <h1 class="heading">Hosted cars</h1><br><br>
-    <div style="display: flex;" id ="featured" class="featured"></div>
+    <div style="display: flex;" class="featured"></div>
 
     <div  id ="carsdiv" class ="container">
             
@@ -90,9 +90,8 @@ flex-direction: column;
   ></script>
   <script>
    
-
-    $.ajax({
-        url: "http://localhost:2000/rental/list/search",
+   $.ajax({
+        url: "http://localhost:2000/car/list",
         method: "GET",
         success: function (data) {
           console.log(data);
@@ -118,7 +117,7 @@ flex-direction: column;
       <li>${data[i].carmileage} km/l</li>
       <li>${data[i].cardriven} km</li>
       <li>${data[i].address}</li>
-      <h5>$${data[i].price}/hr</h5>
+      <h5>$${data[i].price}RoundTrip</h5>
       <button onclick="window.location.href='http://localhost:2000/cardetails/${data[i].id}';" class = "detbtns btn btn-outline-primary mb-3 w-50" id="detbtn-`+i+`">Book Now</button>
 
 
@@ -131,6 +130,10 @@ error: function (err) {
 console.log(err);
 },
 });
+
+    
+
+    
   </script>
 
 </body>

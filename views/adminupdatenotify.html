@@ -7,6 +7,8 @@
     <link rel=“stylesheet” href=“https://fonts.googleapis.com/css?family=Roboto”>
     <link rel=“stylesheet” href=“https://fonts.googleapis.com/css?family=Source Sans Pro”>
     <link rel=“stylesheet” href=“https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css”>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
 
     <title>Disciple Assistance</title>
     <meta charset="UTF-8">
@@ -15,12 +17,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source Sans Pro">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <style>
       html {
       scroll-behavior: smooth;
     }
     h1,h2,h3,h4,h5,h6 {font-family: "Roboto"}
     body {font-family: "Source Sans Pro"}
+
+
     </style>
   </head>
 <body class="w3-light-white w3-margin">
@@ -61,110 +67,72 @@
   <a href="http://localhost:2000/admincars" class="w3-bar-item w3-button">Add Cars</a>
 
 </div>
+
+
+<form action="/action_page.php" class="form1" style="border:1px solid #ccc">
+
+    <div class ="mb-5">
+        <h3 class ="mb-3">Update Notification</h3>
+        <input  type="text" id="notify" placeholder="Notification" class ="form-control mb-3">    
+        <button type="submit"  id=
+        "signin" class = "btn btn-outline-primary mb-3 w-20 ">Update</button>
     
+    
+        </div>
+        </form>
 
 
-    <h2>Bank Info List</h2>
-    <h5 id="error"></h5>
-    <div class="row p-5">
-      <div class="col-lg-12">
-        <table id="table" class="table table-hover mt-5">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Bank</th>
-              <th>Address</th>
-              <th>Account No</th>
-              <th>Transit No</th>
-              <th>Institution No</th>
-              <th>Insurance Policy No</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-
-    <script
-      src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-      crossorigin="anonymous"
-    ></script>
-
-
-    <script>
-      
-      
-      fetch("http://localhost:2000/account/bank", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => {
-          console.log(res);
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw new Error("Something went wrong");
-          }
-        })
-        .catch((err) => {
-          document.getElementById("error").innerHTML =
-            "Invalid email or password";
-        })
-        .then((data) => {
-          //add array of users to table
-          data.forEach((account) => {
-            var row = document.createElement("tr");
-            var id = document.createElement("td");
-            var name = document.createElement("td");
-            var bank = document.createElement("td");
-            var address = document.createElement("td");
-            var accountno = document.createElement("td");
-            var transitno = document.createElement("td");
-            var institutionno = document.createElement("td");
-            var carinsurance = document.createElement("td");
-
-
-
-
-
-
-
-            id.innerHTML = account.id;
-            name.innerHTML = account.name;
-            bank.innerHTML = account.bank;
-            address.innerHTML = account.address;
-            accountno.innerHTML = account.accountno;
-            transitno.innerHTML = account.transitno;
-            institutionno.innerHTML = account.institutionno;
-            carinsurance.innerHTML = account.carinsurance;
-         
-
-            row.appendChild(id);
-            row.appendChild(name);
-            row.appendChild(bank);
-            row.appendChild(address);
-            row.appendChild(accountno);
-            row.appendChild(transitno);
-            row.appendChild(institutionno);
-            row.appendChild(carinsurance);
-
-
-            document.getElementById("table").appendChild(row);
-          });
-
-          console.log(data);
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+        crossorigin="anonymous"
+      ></script>
+  
+      <script>
+        var currentUrl = window.location.href;
+        const id = currentUrl.split("/").pop();
+        console.log(id);
+        //when clocked on cancel button the page should be redirected to the admin page
+  
+        // create a get AJAX request
+        $.ajax({
+          url: "http://localhost:2000/notify/" + id,
+          type: "GET",
+          success: function (data) {
+            console.log(data);
+            // populate the inputs
+            $("#notify").val(data.notification);
+          },
         });
+  
+        // create a post AJAX request to add the product
+  
+        $("#signin").click(function (e) {
+          e.preventDefault();
+          var notify = $("#notify").val();
+        
+  
+          var formData = new FormData();
+          formData.append("notify", notify);
+          $.ajax({
+            url: "http://localhost:2000/notify/update/" + id,
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+              console.log(data);
+              location.reload();
+              $("#error").html(data.message);
+            },
+            error: function (data) {
+              console.log(data);
+              $("#error").html(data.responseJSON.message);
+            },
+          });
+        });
+      </script>
 
 
-   
+</body>
 
-
-
-
-
-    </script>
-  </body>
 </html>

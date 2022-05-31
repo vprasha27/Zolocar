@@ -7,6 +7,8 @@ module.exports = {
     cartRouter: require("./cart"),
     order: require("./order"),
     account: require("./account"),
+    car: require("./car"),
+    notify: require("./notify"),
 
 
 

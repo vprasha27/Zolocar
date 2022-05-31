@@ -19,8 +19,8 @@
       crossorigin="anonymous"
     />
 
-    <link rel="stylesheet" href="http://localhost:4000/style/home.css" />
-    <link rel="stylesheet" href="http://localhost:4000/style/main.css" />
+    <link rel="stylesheet" href="http://localhost:2000/style/home.css" />
+    <link rel="stylesheet" href="http://localhost:2000/style/main.css" />
   </head>
   <body>
     <div
@@ -28,9 +28,9 @@
       style="display: flex; justify-content: space-between; align-items: center"
     >
     <div class="logo">
-        <a href="http://localhost:4000/main">
+        <a href="http://localhost:2000/main">
         <img
-          src="http://localhost:4000/img/Untitled.jpg"id="logo"
+          src="http://localhost:2000/img/Untitled.jpg"id="logo"
           style="height: 70px; width: 300px"
           alt=""
         />
@@ -43,16 +43,16 @@
           //if the user has jwt token, then show the user name
           document.getElementById(
             "links"
-          ).innerHTML = `<a href="http://localhost:4000/profile" class="link">
-            <img height="70" width="70" src="http://localhost:4000/img/profile.jpg"  alt="user" id="profile"/>
-            </a> <a href="http://localhost:4000/hostcars" class="link">
-            <img height="80" width="120" src="http://localhost:4000/img/carshare.jpeg" alt="user" id="postrental" />
+          ).innerHTML = `<a href="http://localhost:2000/profile" class="link">
+            <img height="70" width="70" src="http://localhost:2000/img/profile.jpg"  alt="user" id="profile"/>
+            </a> <a href="http://localhost:2000/hostcars" class="link">
+            <img height="80" width="120" src="http://localhost:2000/img/carshare.jpeg" alt="user" id="postrental" />
             </a>`;
         } else {
           //if the user doesn't have jwt token, then show the login button
           document.getElementById(
             "links"
-          ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:4000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:4000/register">Register</a>`;
+          ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:2000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:2000/register">Register</a>`;
         }
       </script>
     </div>
@@ -117,7 +117,7 @@
 
       // create a get AJAX request
       $.ajax({
-        url: "http://localhost:4000/rental/" + id,
+        url: "http://localhost:2000/rental/" + id,
         type: "GET",
         success: function (data) {
           console.log(data);
@@ -147,13 +147,13 @@
 
       //create an ajax request to get all the products
       $.ajax({
-        url: "http://localhost:4000/rental/list",
+        url: "http://localhost:2000/rental/list",
         method: "GET",
         success: function (data) {
           for (let index = 0; index < data.length; index++) {
             document.getElementById("allProducts-right").innerHTML += `
           <div class="product">
-          <a href="http://localhost:4000/cardetails/${data[index].id}">
+          <a href="http://localhost:2000/cardetails/${data[index].id}">
           <img
             src="${data[index].image}"
             alt=""
@@ -175,7 +175,7 @@
         var qty = $("#qty").val();
         console.log(qty);
         $.ajax({
-          url: "http://localhost:4000/cart/add",
+          url: "http://localhost:2000/cart/add",
           type: "POST",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("token"),
@@ -186,7 +186,7 @@
           },
           success: function (data) {
             console.log(data);
-            window.location.href = "http://localhost:4000/billing";
+            window.location.href = "http://localhost:2000/billing";
           },
         });
       });

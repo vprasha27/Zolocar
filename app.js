@@ -7,7 +7,7 @@ const fileUpload = require("express-fileupload");
 
 const controllers = require("./src/controllers");
 const app = express();
-const port = 4000;
+const port = 2000;
 
 
 // for body parser. to collect data that sent from the client.

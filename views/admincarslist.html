@@ -31,9 +31,9 @@
     style="display: flex; justify-content: space-between; align-items: center"
   >
   <div class="logo">
-    <a href="http://localhost:4000/main">
+    <a href="http://localhost:2000/main">
     <img
-      src="http://localhost:4000/img/Untitled.jpg"id="logo1"
+      src="http://localhost:2000/img/Untitled.jpg"id="logo1"
       style="height: 70px; width: 300px"
       alt=""
     />
@@ -44,19 +44,22 @@
 
 <!-- Navigation bar with links -->
 <div class="w3-bar w3-white w3-text-black">
-  
-    <a href="#Contact" class="w3-hide-small w3-bar-item w3-button w3-mobile w3-medium w3-right" style="margin-top:10px;">CONTACT</a>
-  <a href="http://localhost:4000/bookinglist" class="w3-hide-small w3-bar-item w3-button w3-mobile w3-medium w3-right" style="margin-top:10px;">Booking List</a>
-  <a href="http://localhost:4000/admincarslist" class="w3-hide-small w3-bar-item w3-button w3-mobile w3-medium w3-right" style="margin-top:10px;">Hosted Cars</a>
-  <a href="http://localhost:4000/adminuserslist" class="w3-hide-small w3-bar-item w3-button w3-mobile w3-medium w3-right" style="margin-top:10px;">Users List</a>
+  <a href="http://localhost:2000/admincars" class="w3-hide-small w3-bar-item w3-button w3-mobile w3-medium w3-right" style="margin-top:10px;">Add Cars</a>
+
+  <a href="http://localhost:2000/bankinfo" class="w3-hide-small w3-bar-item w3-button w3-mobile w3-medium w3-right" style="margin-top:10px;">Bank Details</a>
+  <a href="http://localhost:2000/bookinglist" class="w3-hide-small w3-bar-item w3-button w3-mobile w3-medium w3-right" style="margin-top:10px;">Booking List</a>
+  <a href="http://localhost:2000/admincarslist" class="w3-hide-small w3-bar-item w3-button w3-mobile w3-medium w3-right" style="margin-top:10px;">Hosted Cars</a>
+  <a href="http://localhost:2000/adminuserslist" class="w3-hide-small w3-bar-item w3-button w3-mobile w3-medium w3-right" style="margin-top:10px;">Users List</a>
   <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-medium w3-hide-large" style="margin-top:10px;" onclick="myFunction()">&#9776;</a>
 </div>
 
 <div id="demo" width = "2000px" class="w3-bar-block w3-white w3-hide w3-hide-large w3-small">
-  <a href="http://localhost:4000/adminuserslist" class="w3-bar-item w3-button">Users List</a>
-  <a href="http://localhost:4000/admincarslist" class="w3-bar-item w3-button">Hosted Cars</a>
-  <a href="http://localhost:4000/bookinglist" class="w3-bar-item w3-button">Booking List</a>
-  <a href="#Contact" class="w3-bar-item w3-button">CONTACT</a>
+  <a href="http://localhost:2000/adminuserslist" class="w3-bar-item w3-button">Users List</a>
+  <a href="http://localhost:2000/admincarslist" class="w3-bar-item w3-button">Hosted Cars</a>
+  <a href="http://localhost:2000/bookinglist" class="w3-bar-item w3-button">Booking List</a>
+  <a href="http://localhost:2000/bankinfo" class="w3-bar-item w3-button">Bank Details</a>
+  <a href="http://localhost:2000/admincars" class="w3-bar-item w3-button">Add Cars</a>
+
 </div>
 
 <h2>Hosted Cars</h2>
@@ -93,7 +96,7 @@
   function featureProduct(id, feature) {
     //make a post request to the server
     $.ajax({
-      url: "http://localhost:4000/rental/update/feature/" + id,
+      url: "http://localhost:2000/rental/update/feature/" + id,
       method: "POST",
       data: {
         feature: feature,
@@ -109,7 +112,7 @@
     });
   }
 
-  fetch("http://localhost:4000/rental/list", {
+  fetch("http://localhost:2000/rental/list", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

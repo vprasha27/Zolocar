@@ -36,9 +36,9 @@
 
 
 <div class="logo">
-  <a href="http://localhost:4000/main">
+  <a href="http://localhost:2000/main">
   <img
-    src="http://localhost:4000/img/Untitled.jpg"id="logo1"
+    src="http://localhost:2000/img/Untitled.jpg"id="logo1"
     style="height: 70px; width: 300px"
     alt=""
   />
@@ -53,10 +53,7 @@
         <h3 class ="mb-3">Admin Login</h3>
         <input type="text" id="email" placeholder="Email" class ="form-control mb-3">
         <input type="password" id="password" placeholder="Password" class ="form-control mb-3">
-        <div class="custom-control custom-switch mb-3 ">
-            <input type="checkbox" class="custom-control-input" id="customSwitch1">
-            <label class="custom-control-label" for="customSwitch1">Keep Me logged In </label>
-          </div>
+       
         <button id="login" class = "btn btn-outline-primary mb-3 w-100 ">Login</button>
 
 
@@ -78,7 +75,7 @@
                   //if not empty, check if email and password are correct
         
                   //use fetch api to send data to server
-                  fetch("http://localhost:4000/admin/login", {
+                  fetch("http://localhost:2000/admin/login", {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
@@ -105,7 +102,7 @@
                     .then((data) => {
                       localStorage.setItem("token", data.token);
                       localStorage.setItem("role", "admin");
-                      window.location.href = "http://localhost:4000/adminuserslist";
+                      window.location.href = "http://localhost:2000/adminuserslist";
                       console.log(data);
                     });
                 }

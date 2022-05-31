@@ -1,11 +1,11 @@
-const Add = require("../models/Add");
+const Cars = require("../models/Cars");
 const express = require("express");
 const { Op } = require("sequelize");
 const uploadImage = require("../helpers/upload");
 const router = express.Router();
 
 //create a route named /product/add to add a new product
-router.post("/rental/add", async function (req, res) {
+router.post("/car/add", async function (req, res) {
     try {
       const file = req.files;
       const image = await uploadImage({
@@ -17,7 +17,7 @@ router.post("/rental/add", async function (req, res) {
   
       req.body.image = image;
      
-      const rental = await Add.create(req.body);
+      const rental = await Cars.create(req.body);
       res.send(rental);
       
     } catch (error) {
@@ -28,9 +28,9 @@ router.post("/rental/add", async function (req, res) {
   
 
 //create a route named /product/list to list all products
-router.get("/rental/list", async function (req, res) {
+router.get("/car/list", async function (req, res) {
   try {
-    const adds = await Add.findAll();
+    const adds = await Cars.findAll();
     res.send(adds);
   } catch (error) {
     res.send(error);
@@ -138,19 +138,18 @@ router.get("/rentals/feature/get", async (req, res) => {
   }
 });
 
-
-router.get("/rental/list/search", async function (req, res) {
-
-  try {
-    let { term } = req.query;
-    const adds = await Add.findAll({ where: { address: {[Op.like]:  '%' + term + '%'} } });
-    res.send(adds);
-  } catch (error) {
-    res.send(error);
-  }
+router.get('/rental', (req, res) => 
+  Add.findAll()
+    .then(ride => res.render('ride', {
+      ride
+      }))
+    .catch(err => res.render('error', {error: err})));
+router.get('/search', (req, res) => {
+  let { term } = req.query;
+  Add.findAll({ where: { address : { [Op.like]: '%' +term+ '%' } } })
+    .then(ride => res.render('ride', { ride }))
+    .catch(err => res.render('error', {error: err}));
 });
-
-
 
 
 

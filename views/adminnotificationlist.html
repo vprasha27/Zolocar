@@ -67,7 +67,7 @@
     
 
 
-    <h2>Users List</h2>
+    <h2>Notification List</h2>
     <h5 id="error"></h5>
     <div class="row p-5">
       <div class="col-lg-12">
@@ -75,12 +75,8 @@
           <thead>
             <tr>
               <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Lisence</th>
-              <th>Role</th>
-              <th>Block</th>
-              <th>Lisence Verify</th>
+              <th>Notification</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -95,49 +91,8 @@
 
     <script>
       //create a function that makes a POST request to block or unblock a user
-      function blockUser(id, isBlocked) {
-        //make a post request to the server
-        $.ajax({
-          url: "http://localhost:2000/userr/block",
-          method: "POST",
-          data: {
-            id: id,
-            isBlocked: isBlocked,
-          },
-          success: function (data) {
-            //if the request is successful, reload the page
-            location.reload();
-          },
-          error: function (error) {
-            //if the request is unsuccessful, display an error message
-            $("#error").text(error.responseJSON.message);
-          },
-        });
-      }
 
-      function lisenceverify(id, verify) {
-        //make a post request to the server
-        $.ajax({
-          url: "http://localhost:2000/userr/blocked",
-          method: "POST",
-          data: {
-            id: id,
-            verify: verify,
-          },
-          success: function (data) {
-            //if the request is successful, reload the page
-            location.reload();
-          },
-          error: function (error) {
-            //if the request is unsuccessful, display an error message
-            $("#error").text(error.responseJSON.message);
-          },
-        });
-      }
-
-     
-
-      fetch("http://localhost:2000/users/list", {
+      fetch("http://localhost:2000/notify/list", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -157,43 +112,26 @@
         })
         .then((data) => {
           //add array of users to table
-          data.forEach((userr) => {
+          data.forEach((notify) => {
             var row = document.createElement("tr");
             var id = document.createElement("td");
-            var name = document.createElement("td");
-            var email = document.createElement("td");
-            var lisence = document.createElement("td");
-            var role = document.createElement("td");
+            var notifica = document.createElement("td");
             var action = document.createElement("td");
-            var block = document.createElement("td");
-            var verify = document.createElement("td");
 
 
-            id.innerHTML = userr.id;
-            name.innerHTML = userr.firstName;
-            email.innerHTML = userr.email;
-            lisence.innerHTML = userr.Lisence;
-            role.innerHTML = userr.role;
-            action.innerHTML = `<a href="http://localhost:2000/users/edit/${userr.id}">Edit</a>`;
-            block.innerHTML = `<button class="btn btn-danger" onclick="blockUser(${
-              userr.id
-            }, ${userr.block === 1 ? 0 : 1} )" >${
-              userr.block === 1 ? "Unblock" : "Block"
-            }</button>`;
-            verify.innerHTML = `<button class="btn btn-danger" onclick="lisenceverify(${
-              userr.id
-            }, ${userr.verify === 1 ? 0 : 1} )" >${
-              userr.verify === 1 ? "Unblock" : "Block"
-            }</button>`;
+
+
+            id.innerHTML = notify.id;
+            notifica.innerHTML = notify.notification;
+
+            action.innerHTML = `<a href="http://localhost:2000/notificationupdate/${notify.id}">Edit</a>`;
            
 
             row.appendChild(id);
-            row.appendChild(name);
-            row.appendChild(email);
-            row.appendChild(lisence);
-            row.appendChild(role);
-            row.appendChild(block);
-            row.appendChild(verify);
+            row.appendChild(notifica);
+            row.appendChild(action);
+
+
 
             
 

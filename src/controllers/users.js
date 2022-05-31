@@ -262,6 +262,52 @@ router.post("/userr/login", async (req, res) => {
     }
   });
 
+
+  router.post("/user/forgot-password", async (req, res) => {
+    try {
+      const { email } = req.body;
+      const user = await User.findOne({
+        where: {
+          email: email,
+        },
+      });
+      if (!user) {
+        return res.status(401).send({ error: "User not found" });
+      }
+  
+      //generate 6 digit OTP code
+      const otpCode = Math.floor(Math.random() * 900000) + 100000;
+  
+      //send email to user with otp code
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "prasharvivudh1994@gmail.com",
+          pass: "uvistocerujbxmoa",
+        },
+      });
+  
+      const mailOptions = {
+        from: "Cosmostyles",
+        to: email,
+        subject: "OTP Code",
+        text: `Your OTP Code is ${otpCode}`,
+      };
+  
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Email sent: " + info.response);
+        }
+      });
+  
+      res.send({ otpCode });
+    } catch (e) {
+      res.status(400).send(e.message);
+    }
+  }); 
+
   //create a route to send the email to user
 router.post("/contact", async (req, res) => {
   try {
@@ -291,6 +337,48 @@ router.post("/contact", async (req, res) => {
     });
 
     res.send("Success");
+  } catch (e) {
+    res.status(400).send(e.message);
+  }
+});
+
+router.post("/user/update-new-password", async (req, res) => {
+  try {
+    const { password, email } = req.body;
+    const file = req.files;
+      console.log(file);
+    const user = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    
+
+
+    if (!user) {
+      return res.status(401).send({ error: "User not found" });
+    }
+
+    const hashedPassword = await Password.hashPassword(password);
+    console.log(
+      "🚀 ~ file: users.js ~ line 162 ~ router.post ~ hashedPassword",
+      hashedPassword
+    );
+
+    await User.update(
+      {
+        password: hashedPassword,
+      },
+      {
+        where: {
+          email: email,
+        },
+      }
+    );
+
+    res.send({ message: "Password updated successfully" });
+    alert ( "Password updated successfully" )
   } catch (e) {
     res.status(400).send(e.message);
   }

@@ -45,47 +45,33 @@
 </a>
 <br><br>
 
-<script>
-    //check if the user has jwt token
-    if (localStorage.getItem("token")) {
-      //if the user has jwt token, then show the user name
-      document.getElementById(
-        "links"
-      ).innerHTML = `<a href="http://localhost:2000/profile" class="link">
-        <img height="70" width="70" src="http://localhost:2000/img/profile.jpg"  alt="user" id="profile"/>
-        </a> <a href="http://localhost:2000/hostcars" class="link">
-        <img height="80" width="120" src="http://localhost:2000/img/carshare.jpeg" alt="user" id="postrental" />
-        </a>`;
-    } else {
-      //if the user doesn't have jwt token, then show the login button
-      document.getElementById(
-        "links"
-      ).innerHTML = `<a class='btn btn-sm btn-success' id="login" href="http://localhost:2000/login">Login</a> <a class='btn btn-sm btn-success' id="register" href="http://localhost:2000/register">Register</a>`;
-    }
-  </script>
 
 <body>
 
    
     <div class ="mb-5">
-        <h3 class ="mb-3">Host Car</h3>
+        <h3 class ="mb-3">Add Car</h3>
         <form enctype="multipart/form-data">
 
-        <input  type="text" id="name" placeholder="Full Name" class ="form-control mb-3">
-        <select  class ="form-control mb-3" id="bank" name="bank">
-            <option value="RBC">Royal Bank Of Canada</option>
-            <option value="Scotia Bank">Scotia Bank </option>
+        <input  type="text" id="name" placeholder="Car Name" class ="form-control mb-3">
+        <select  class ="form-control mb-3" id="cartype" name="cars">
+            <option value="Automatic">Automatic</option>
+            <option value="Manual">Manual</option>
           </select>
 
         <input type="text" id="address" placeholder="Address" class ="form-control mb-3">
-        <input type="number" id="accountno" placeholder="Account No" class ="form-control mb-3">
-        <input type="number" id="transitno" placeholder="Transit No" class ="form-control mb-3">
-        <input type="number" id="institutionno" placeholder="Institution No" class ="form-control mb-3">
-        <input type="number" id="carinsurance" placeholder="Insurance No" class ="form-control mb-3">
-        <br /><br />
+        <input type="text" id="cardriven" placeholder="Car Driven" class ="form-control mb-3">
+        <input type="text" id="carmileage" placeholder="Mileage/Km" class ="form-control mb-3">
+        <input type="text" id="carnumber" placeholder="Car Number" class ="form-control mb-3">
 
-       <div class ="clearfix">
-            <button class = "btn btn-outline-primary mb-3 w-50" id = "addCar">Send Details</button>
+        <input type="number" id="price" placeholder="$ Price" class ="form-control mb-3">
+        <label for="image">Image</label>
+        <input type="file" id="image" name="image" required /><br /><br />
+
+       <div style="display: flex;" class ="clearfix">
+            <button class = "btn btn-outline-primary mb-3 w-50" id = "addCar">Host Car</button>            <button onclick="window.location.href='http://localhost:2000/hosthome';" class = "btn btn-outline-primary mb-3 w-50" id = "getpaid">Get Paid</button>
+
+
 
 
         </div>
@@ -113,17 +99,18 @@
   
     $("#addCar").click(function (e) {
       e.preventDefault();
+      var file = image.files[0];
       var name = $("#name").val();
-      var bank = $("#bank").val();
+      var cartype = $("#cartype").val();
 
 
       var address = $("#address").val();
   
-      var accountno = $("#accountno").val();
-      var transitno = $("#transitno").val();
+      var cardriven = $("#cardriven").val();
+      var carmileage = $("#carmileage").val();
   
-      var institutionno = $("#institutionno").val();
-      var carinsurance = $("#carinsurance").val();
+      var price = $("#price").val();
+      var carnumber = $("#carnumber").val();
 
   
   
@@ -131,21 +118,22 @@
   
   
       formData.append("name", name);
-      formData.append("bank", bank);
+      formData.append("cartype", cartype);
       formData.append("address", address);
-      formData.append("accountno", accountno);
-      formData.append("transitno", transitno);
-      formData.append("institutionno", institutionno);
-      formData.append("carinsurance", carinsurance);
+      formData.append("cardriven", cardriven);
+      formData.append("carmileage", carmileage);
+      formData.append("price", price);
+      formData.append("carnumber", carnumber);
+      formData.append("file", file);
   
-      if (name == "" || bank == "" || address == "" || accountno == "" || transitno == "" ||  institutionno == "" || carinsurance == "") {
+      if (cartype == "" || carmileage == "" ||  cardriven == "" || name == "" ||  address == "" || file == "") {
             alert("Your Add is empty");
           } 
   
   else{
       
       $.ajax({
-        url: "http://localhost:2000/account/add",
+        url: "http://localhost:2000/car/add",
         type: "POST",
         data: formData,
         contentType: false,
@@ -154,7 +142,7 @@
           console.log(data);
           location.reload();
           $("#error").html(data.message);
-          alert("The Info has been sent to Admin you will get payment within 24 hrs ")
+          alert("The Add has been Posted")
         },
         error: function (data) {
           console.log(data);
